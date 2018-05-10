@@ -32,19 +32,20 @@
       window.addEventListener("devicemotion", onMove);
 
       function onMove(event) {
-        switch (activeEffect) {
-          case "gradient-1":
-            gradient1(event);
-            break;
-          case "gradient-2":
-            gradient2(event);
-            break;
-          case "gradient-3":
-            gradient3(event);
-            break;
-          case "accelerate":
-            accelerate(event);
-            break;
+        if (event.type == "deviceorientation") {
+          switch (activeEffect) {
+            case "gradient-1":
+              gradient1(event);
+              break;
+            case "gradient-2":
+              gradient2(event);
+              break;
+            case "gradient-3":
+              gradient3(event);
+              break;
+          }
+        } else if (event.type == "devicemotion") {
+          accelerate(event);
         }
       }
 
