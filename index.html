@@ -12,7 +12,8 @@
   <nav>
     <button id="gradient-1" class="button">Gradient 1</button>
     <button id="gradient-2" class="button">Gradient 2</button>
-    <button id="gradient-3" class="button">Gradient 2</button>
+    <button id="gradient-3" class="button">Gradient 3</button>
+    <button id="accelerate" class="button">Gradient 4</button>
   </nav>
 
   <script>
@@ -24,10 +25,11 @@
       buttons.forEach(button => button.addEventListener("click", navigate));
 
       function navigate(event) {
-        activeEffect = event.target.id.replace("-link", "");
+        activeEffect = event.target.id;
       }
 
       window.addEventListener("deviceorientation", onMove);
+      window.addEventListener("devicemotion", onMove);
 
       function onMove(event) {
         switch (activeEffect) {
@@ -40,11 +42,13 @@
           case "gradient-3":
             gradient3(event);
             break;
+          case "accelerate":
+            accelerate(event);
+            break;
         }
       }
 
       function gradient1(event) {
-        console.log("1")
         let { alpha } = event
         alpha %= 360
         const style = `linear-gradient(${alpha}deg, #FC466B, #3F5EFB)`
@@ -52,7 +56,6 @@
       }
 
       function gradient2(event) {
-        console.log("2")
         let { beta } = event
         beta %= 360
         const style = `linear-gradient(${beta}deg, #FC466B, #3F5EFB)`
@@ -60,10 +63,18 @@
       }
 
       function gradient3(event) {
-        console.log("3")
         let { gamma } = event
         gamma %= 360
         const style = `linear-gradient(${gamma}deg, #FC466B, #3F5EFB)`
+        document.body.style.background = style
+      }
+
+      function accelerate(event) {
+        const { acceleration } = event
+        const { x, y, z } = acceleration
+        const norm = x ^ 2 + y ^ 2 + z ^ 2
+        const lightness = 100 - Math.min(70, norm)
+        const style = `hsl(230, 100%, ${lightness}%)`
         document.body.style.background = style
       }
     }());
