@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>Moves</title>
+  <link rel="stylesheet" type="text/css" href="styles.css" />
+</head>
+
+<body>
+  <nav>
+    <button id="gradient-1" class="button">Gradient 1</button>
+    <button id="gradient-2" class="button">Gradient 2</button>
+    <button id="gradient-3" class="button">Gradient 2</button>
+  </nav>
+
+  <script>
+    (function () {
+      let activeEffect = "gradient-1";
+
+      // Navigation
+      const buttons = Array.from(document.getElementsByClassName("button"))
+      buttons.forEach(button => button.addEventListener("click", navigate));
+
+      function navigate(event) {
+        activeEffect = event.target.id.replace("-link", "");
+      }
+
+      window.addEventListener("deviceorientation", onMove);
+
+      function onMove(event) {
+        switch (activeEffect) {
+          case "gradient-1":
+            gradient1(event);
+            break;
+          case "gradient-2":
+            gradient2(event);
+            break;
+          case "gradient-3":
+            gradient3(event);
+            break;
+        }
+      }
+
+      function gradient1(event) {
+        console.log("1")
+        let { alpha } = event
+        alpha %= 360
+        const style = `linear-gradient(${alpha}deg, #FC466B, #3F5EFB)`
+        document.body.style.background = style
+      }
+
+      function gradient2(event) {
+        console.log("2")
+        let { beta } = event
+        beta %= 360
+        const style = `linear-gradient(${beta}deg, #FC466B, #3F5EFB)`
+        document.body.style.background = style
+      }
+
+      function gradient3(event) {
+        console.log("3")
+        let { gamma } = event
+        gamma %= 360
+        const style = `linear-gradient(${gamma}deg, #FC466B, #3F5EFB)`
+        document.body.style.background = style
+      }
+    }());
+  </script>
+</body>
+
+</html>
